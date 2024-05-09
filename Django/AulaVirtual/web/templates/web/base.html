@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Virtual 2.0 - {% block titulo %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="base.css">
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+    <header>
+        <h1>Aula Virtual 2.0</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Index</a></li>
+            <li><a href="{% url 'lista_alumnos' %}">Listado de Alumnos</a></li>
+            <li><a href="#">Proximamente</a></li>
+        </ul>
+    </nav>
+    <main>
+        {% block main %}{% endblock %}
+    </main>
+    <footer>
+        <p>Codo a codo 2024 - Todos los derechos reservados</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% extends "web/base.html" %}
+
+{% block titulo %} Listado de alumnos {% endblock %}
+
+{% block extra_css %}{% endblock %}
+
+{% block main %}
+    <h2>Listado de alumnos</h2>
+    {% if cuota_al_dia %}
+            <p style="padding:15px; background-color: green; color: white;">NO DEBE DINERO</p>
+    {% else %}
+        <p style="padding:15px; background-color: red; color: white;">DEBE LA CUOTA</p>
+    {% endif %}
+
+    <a href="{% url 'index' %}">Volver</a>
+
+    <section>
+        {% for alumno in alumnos %}
+            <article>
+                <p>{{ alumno | upper }}</p>
+            </article>
+
+        {% empty %}
+            <article>
+                <p>No hay alumnos cargados</p>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
