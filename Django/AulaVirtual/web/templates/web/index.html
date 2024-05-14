@@ -1,9 +1,14 @@
 {% extends "web/base.html" %}
+{% load static %}
 
-{% block titulo %}{% endblock %}
-{% block extra_css %}{% endblock %}
+{% block titulo %}Bienvenid@s{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/styles/index.css' %}">
+{% endblock %}
 
 {% block main %}
-    <p>Bienvenid@ {{ name }}</p>
+    <h2>Bienvenid@ {{ name }}</h2>
     <p>{{ fecha_hora }}</p>
+
+    <img src="{% static 'web/img/perrito.jpg' %}" alt="La foto de un perrito">
 {% endblock %}

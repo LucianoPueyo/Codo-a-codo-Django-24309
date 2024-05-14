@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import redirect
+
+from .forms import *
+
 import datetime
 
 def index(request):
@@ -34,3 +38,27 @@ def listado_alumnos(request):
     }
 
     return render(request, 'web/listado_alumnos.html', contexto)
+
+def alta_alumno(request):
+    
+    contexto = {}
+
+    if request.method == "GET":
+        contexto['alta_alumno_form'] = AltaAlumnoForm()
+    
+    else: # Asumo que es un POST
+        contexto['alta_alumno_form'] = AltaAlumnoForm(request.POST)
+        
+        # Validar el form
+
+        # Si el form es correcto
+        # Lo redirijo a una vista segura por ejemplo el index
+
+        # Si el form es incorrecto
+        # renderizo un form con mensajes de error
+        
+        print(request.POST)
+
+        return redirect('index')
+
+    return render(request, 'web/alta_alumno.html', contexto)
