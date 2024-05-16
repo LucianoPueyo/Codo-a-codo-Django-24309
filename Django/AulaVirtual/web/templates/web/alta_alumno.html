@@ -12,8 +12,7 @@
     <h2>Alta de nuevo alumno</h2>
     <form method="POST" action="{% url 'alta_alumno' %}">
         {% csrf_token %}
-        {{ alta_alumno_form }}
-
+        {{ alta_alumno_form.as_p }}
         <input type="submit">
     </form>
 {% endblock %}

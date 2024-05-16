@@ -26,6 +26,20 @@ header {
     background-color: rgba(0,0,0,0.3);
 }
 
+header .messages {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    
+    border-radius: 5px;
+}
+
+header .messages .success {
+    background-color: rgba(0,255,0,0.5);
+    padding: 15px;
+    color: white;
+}
+
 main {
     flex: 1;
     flex-direction: column;
