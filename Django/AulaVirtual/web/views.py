@@ -41,7 +41,6 @@ def listado_alumnos(request):
     return render(request, 'web/listado_alumnos.html', contexto)
 
 def alta_alumno(request):
-    
     contexto = {}
 
     if request.method == "GET":
