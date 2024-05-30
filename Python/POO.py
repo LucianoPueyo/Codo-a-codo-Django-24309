@@ -19,7 +19,7 @@ class Docente:
         return self.dni == other.dni
 
 
-alumno1 = Alumno("Carlos", "Lopez", 1234)
+alumno1 = Alumno(nombre="Carlos", apellido="Lopez", dni=1234)
 alumno2 = Alumno("Maria", "Del Cerro", 5678)
 alumno3 = Alumno("Gaston", "Perez", 1234)
 
