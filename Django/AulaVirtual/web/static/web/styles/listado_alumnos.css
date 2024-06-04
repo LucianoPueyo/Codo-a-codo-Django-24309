@@ -1,0 +1,13 @@
+.listado_alumnos article{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-evenly;
+    align-items: center;
+
+    background-color: aqua;
+
+    padding: 15px;
+
+    margin: 15px;
+}

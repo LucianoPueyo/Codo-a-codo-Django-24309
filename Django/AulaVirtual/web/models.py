@@ -2,16 +2,20 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-class Alumno(models.Model):
+class Persona(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     apellido = models.CharField(max_length=100, verbose_name="Apellido")
     dni = models.IntegerField(verbose_name="DNI", unique=True)
 
+    class Meta:
+        abstract = True
 
-class Docente(models.Model):
-    nombre = models.CharField(max_length=100, verbose_name="Nombre")
-    apellido = models.CharField(max_length=100, verbose_name="Apellido")
-    dni = models.IntegerField(verbose_name="DNI", unique=True)
+
+class Alumno(Persona):
+    LE = models.IntegerField(verbose_name="Libreta Estudiantil", unique=True, null=True)
+
+
+class Docente(Persona):
     CUIT = models.IntegerField(verbose_name="CUIT", unique=True)
 
 

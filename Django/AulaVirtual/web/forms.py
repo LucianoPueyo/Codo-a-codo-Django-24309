@@ -5,8 +5,6 @@ class AltaAlumnoForm(forms.Form):
     nombre = forms.CharField(label="Nombre", required=True,widget=forms.TextInput(attrs={'class': 'campo_azul'})) 
     apellido = forms.CharField(label="Apellido", required=True) 
     dni = forms.IntegerField(label="DNI", required=True)
-    email = forms.EmailField(label="email", required=True)
-    direccion = forms.CharField(label="Direccion", required=True)
 
     CHOICES = (('Option 1', 'Option 1'),('Option 2', 'Option 2'),)
     field = forms.ChoiceField(choices=CHOICES)

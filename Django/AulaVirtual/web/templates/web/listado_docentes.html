@@ -1,0 +1,26 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block titulo %} Listado de docentes {% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/styles/listado_docentes.css' %}">
+{% endblock %}
+
+{% block main %}
+    <h2>Listado de docentes</h2>
+
+    <ul> 
+        {% for docente in docentes %} 
+
+            <li>{{ docente.nombre }}</li> 
+            <li>{{ docente.apellido }}</li> 
+            <li>{{ docente.dni }}</li>
+            <li>{{ docente.CUIT }}</li> 
+            <hr/> 
+            <!-- If object_list is empty  -->
+        {% empty %} 
+            <li>No hay docentes cargados</li> 
+        {% endfor %} 
+    </ul>
+{% endblock %}

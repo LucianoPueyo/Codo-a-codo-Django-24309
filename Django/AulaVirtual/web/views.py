@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.views.generic.list import ListView
 
 from .forms import *
-
+from .models import Alumno, Docente
 import datetime
 
 def index(request):
@@ -27,14 +28,11 @@ def alumnos_por_año(request, year):
     return HttpResponse(f"listado de alumnos: {year} \n {alumnos}")
 
 def listado_alumnos(request):
+    alumnos = Alumno.objects.all().order_by('dni') # QuerySet
+
 
     contexto = {
-        'alumnos': [
-            'Carlos Lopez',
-            'Maria Del Cerro',
-            'Gaston Perez'
-        ],
-
+        'alumnos': alumnos,
         'cuota_al_dia': True
     }
 
@@ -55,6 +53,15 @@ def alta_alumno(request):
             # Si el form es correcto
             # Lo redirijo a una vista segura por ejemplo el index
             
+            nuevo_alumno = Alumno(
+                nombre = form.cleaned_data['nombre'], 
+                apellido = form.cleaned_data['apellido'], 
+                dni = form.cleaned_data['dni'], 
+                LE = form.cleaned_data['dni'] + 10000
+            )
+
+            nuevo_alumno.save()
+
             messages.success(request, 'El alumno fue dado de alta con éxito')
 
             return redirect('index')
@@ -63,3 +70,10 @@ def alta_alumno(request):
         # Se renderiza un form con mensajes de error  
 
     return render(request, 'web/alta_alumno.html', contexto)
+
+
+class DocenteListView(ListView):
+    model=Docente
+    context_object_name='docentes'
+    template_name='web/listado_docentes.html'
+    ordering = ['dni']

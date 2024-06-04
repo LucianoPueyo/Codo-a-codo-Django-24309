@@ -1,8 +1,11 @@
 {% extends "web/base.html" %}
+{% load static %}
 
 {% block titulo %} Listado de alumnos {% endblock %}
 
-{% block extra_css %}{% endblock %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/styles/listado_alumnos.css' %}">
+{% endblock %}
 
 {% block main %}
     <h2>Listado de alumnos</h2>
@@ -14,10 +17,13 @@
 
     <a href="{% url 'index' %}">Volver</a>
 
-    <section>
+    <section class="listado_alumnos">
         {% for alumno in alumnos %}
             <article>
-                <p>{{ alumno | upper }}</p>
+                <p>Nombre: {{ alumno.nombre }} | </p>
+                <p>Apellido: {{ alumno.apellido }} |</p>
+                <p>Dni: {{ alumno.dni }} |</p>
+                <p>Le: {{ alumno.LE }}</p>
             </article>
 
         {% empty %}
