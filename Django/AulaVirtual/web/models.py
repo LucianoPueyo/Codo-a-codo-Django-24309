@@ -10,14 +10,22 @@ class Persona(models.Model):
     class Meta:
         abstract = True
 
+    def nombre_completo(self):
+        return f"{self.nombre} {self.apellido}"
+
 
 class Alumno(Persona):
     LE = models.IntegerField(verbose_name="Libreta Estudiantil", unique=True, null=True)
+
+    def __str__(self):
+        return f"{self.nombre_completo()} | DNI:{self.dni} | LE: {self.LE}"
 
 
 class Docente(Persona):
     CUIT = models.IntegerField(verbose_name="CUIT", unique=True)
 
+    def __str__(self):
+        return f"{self.nombre} {self.apellido} | DNI:{self.dni} | CUIT: {self.CUIT}"
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
@@ -31,9 +39,11 @@ class Curso(models.Model):
     )
     fecha_inicio = models.DateField(verbose_name="Fecha de inicio")
     fecha_fin = models.DateField(verbose_name="Fecha de finalización")
-    docente = models.ForeignKey(Docente, on_delete=models.CASCADE, null=True)
+    docente = models.ForeignKey(Docente, on_delete=models.CASCADE, null=True, blank=True)
     alumnos = models.ManyToManyField(Alumno, through='Inscripcion')
 
+    def __str__(self):
+        return f"{self.nombre} | {self.turno} | Docente: {self.docente.nombre_completo() if self.docente else '---'}"
 
 class Inscripcion(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)

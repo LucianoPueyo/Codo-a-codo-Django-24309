@@ -9,4 +9,5 @@ urlpatterns = [
     path('alta_alumno', views.alta_alumno, name='alta_alumno'),
 
     path('listado_docentes', views.DocenteListView.as_view(), name='lista_docentes'),
+    path('alta_docente', views.alta_docente, name='alta_docente'),
 ]

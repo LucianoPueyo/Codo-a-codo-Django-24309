@@ -77,3 +77,22 @@ class DocenteListView(ListView):
     context_object_name='docentes'
     template_name='web/listado_docentes.html'
     ordering = ['dni']
+
+
+def alta_docente(request):
+    contexto = {}
+
+    if request.method == "GET":
+        formulario = AltaDocenteModelForm()
+
+    else:
+        formulario = AltaDocenteModelForm(request.POST)
+
+        if formulario.is_valid():
+            formulario.save()
+
+            messages.success(request, 'El docente fue dado de alta con éxito')
+            return redirect('index')
+
+    contexto["formulario"] = formulario
+    return render(request, 'web/alta_docente.html', contexto)

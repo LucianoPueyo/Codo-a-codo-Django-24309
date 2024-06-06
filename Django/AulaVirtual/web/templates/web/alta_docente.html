@@ -1,0 +1,18 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block titulo %}Alta de docente{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'web/styles/alta_docente.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <h2>Alta de nuevo docente</h2>
+    <form method="POST" action="{% url 'alta_docente' %}">
+        {% csrf_token %}
+        {{ formulario.as_p }}
+        <input type="submit">
+    </form>
+{% endblock %}

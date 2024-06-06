@@ -1,6 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
+from .models import Docente
+
 class AltaAlumnoForm(forms.Form):
     nombre = forms.CharField(label="Nombre", required=True,widget=forms.TextInput(attrs={'class': 'campo_azul'})) 
     apellido = forms.CharField(label="Apellido", required=True) 
@@ -33,3 +35,28 @@ class AltaAlumnoForm(forms.Form):
             raise ValidationError("El dni debe tener 8 digitos")
 
         return self.cleaned_data
+    
+
+class AltaDocenteModelForm(forms.ModelForm):
+    class Meta:
+        model = Docente
+        fields = '__all__'
+
+        error_messages = {
+            'dni': {
+                'required': 'El campo DNI es Obligatorio ☺'
+            }
+        }
+
+    def clean_nombre(self):
+        if not self.cleaned_data["nombre"].isalpha():
+            raise ValidationError("El nombre solo puede estar compuesto por letras")
+
+        return self.cleaned_data["nombre"]
+    
+    def clean_apellido(self):
+        if not self.cleaned_data["apellido"].isalpha():
+            raise ValidationError("El apellido solo puede estar compuesto por letras")
+
+        return self.cleaned_data["apellido"]
+
