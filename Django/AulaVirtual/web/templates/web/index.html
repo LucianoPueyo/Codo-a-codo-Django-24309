@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block main %}
-    <h2>Bienvenid@ {{ name }}</h2>
+    {% if user.is_authenticated %}
+        <h2>Bienvenid@ {{ user.username }}</h2>
+    {% endif %}
     <p>{{ fecha_hora }}</p>
 
     <img src="{% static 'web/img/perrito.jpg' %}" alt="La foto de un perrito">

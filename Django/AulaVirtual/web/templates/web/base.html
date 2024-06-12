@@ -16,14 +16,17 @@
         <h1>Aula Virtual 2.0</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'index' %}">Index</a></li>
-                <li><a href="{% url 'lista_alumnos' %}">Listado de Alumnos</a></li>
-                <li><a href="{% url 'alta_alumno' %}">Alta de alumno</a></li>
-                <li><a href="{% url 'lista_docentes' %}">Listado de Docentes</a></li>
-                <li><a href="{% url 'alta_docente' %}">Alta de docente</a></li>
+                <li><a class="button" href="{% url 'index' %}">Index</a></li>
+                {% if user.is_authenticated %}<li><a class="button" href="{% url 'lista_alumnos' %}">Listado de Alumnos</a></li>{% endif %}
+                {% if perms.web.add_alumno %}<li><a class="button" href="{% url 'alta_alumno' %}">Alta de alumno</a></li>{% endif %}
+                {% if user.is_authenticated %}<li><a class="button" href="{% url 'lista_docentes' %}">Listado de Docentes</a></li>{% endif %}
+                {% if perms.web.add_docente %}<li><a class="button" href="{% url 'alta_docente' %}">Alta de docente</a></li>{% endif %}
             </ul>
         </nav>
-
+        <div class="actions">
+            {% if not user.is_authenticated %}<a class="login button" href="{% url 'login' %}">Login</a> {%endif%}
+            {% if user.is_authenticated %}<a class="logout button" href="{% url 'logout' %}">Logout</a> {%endif%}
+        </div>
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}

@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.views.generic.list import ListView
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from .models import Alumno, Docente
@@ -12,11 +15,17 @@ def index(request):
     # Accedo a la BBDD a traves de los modelos
 
     contexto = {
-        'name': 'Maria',
         'fecha_hora': datetime.datetime.now()
     }
 
     return render(request, 'web/index.html', contexto)
+
+def user_logout(request):
+    logout(request)
+
+    messages.success(request, 'Sesion Cerrada')
+
+    return redirect('index')
 
 def saludar(request, nombre):
     print(request.method)
@@ -27,9 +36,9 @@ def alumnos_por_año(request, year):
     alumnos = ["Carlos", "Maria", "Jose"] # """"Levanta""""" los usuarios de la BBDD
     return HttpResponse(f"listado de alumnos: {year} \n {alumnos}")
 
+@login_required
 def listado_alumnos(request):
     alumnos = Alumno.objects.all().order_by('dni') # QuerySet
-
 
     contexto = {
         'alumnos': alumnos,
@@ -72,7 +81,7 @@ def alta_alumno(request):
     return render(request, 'web/alta_alumno.html', contexto)
 
 
-class DocenteListView(ListView):
+class DocenteListView(LoginRequiredMixin, ListView):
     model=Docente
     context_object_name='docentes'
     template_name='web/listado_docentes.html'
