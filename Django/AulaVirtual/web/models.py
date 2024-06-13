@@ -1,31 +1,42 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from AulaVirtual import settings
 
 
 class Persona(models.Model):
-    nombre = models.CharField(max_length=100, verbose_name="Nombre")
-    apellido = models.CharField(max_length=100, verbose_name="Apellido")
     dni = models.IntegerField(verbose_name="DNI", unique=True)
 
     class Meta:
         abstract = True
 
-    def nombre_completo(self):
-        return f"{self.nombre} {self.apellido}"
-
 
 class Alumno(Persona):
+    """
+        https://stackoverflow.com/questions/71423191/django-user-model-with-same-fields
+    """
     LE = models.IntegerField(verbose_name="Libreta Estudiantil", unique=True, null=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
-        return f"{self.nombre_completo()} | DNI:{self.dni} | LE: {self.LE}"
+        return f"{self.user.first_name} {self.user.last_name}| DNI:{self.dni} | LE: {self.LE}"
 
 
 class Docente(Persona):
     CUIT = models.IntegerField(verbose_name="CUIT", unique=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido} | DNI:{self.dni} | CUIT: {self.CUIT}"
+        return f"{self.user.first_name} {self.user.last_name} | DNI:{self.dni} | CUIT: {self.CUIT}"
 
 class Curso(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
